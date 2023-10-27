@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <title>ToDo App - Python</title>
+</head>
+<body class="bg-secondary">
+    {% extends "bootstrap/base.html" %}
+    {% block content %}
+    <div class="container">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand navbar-nav mr-auto" href="#">ToDo App</a>
+            {% if not create %}
+            <Div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto w-100 justify-content-end">
+                    <li>
+                        <div>
+                            <a class="btn btn-light" href="{{ url_for('add_task') }}">New</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            {% endif %}
+        </nav>
+        
+        {% if create %}
+        <form class="px-4 py-4 bg-dark text-white border-dark rounded" method="post">
+            <div class="form-group">
+                <label for="task_name">Task name</label>
+                <input class="form-control" name="task_name" required="required" type="text">
+            </div>
+            <button class="btn btn-primary" type="submit">
+                {% if edit %}
+                    Edit
+                {% else %}
+                    Create
+                {% endif %}
+            </button>
+            <a class="btn btn-danger" href="{{ url_for('main') }}">Cancel</a>
+        </form>
+        {% else %}
+        <ul class="list-group">
+            {% for item in lista %}
+            <li class="list-group-item bg-dark text-white border-dark d-flex align-items-center">
+                {% if item.checked %}
+                    <p class="mb-0 mr-3 text-success"><i class="fa fa-check" aria-hidden="true"></i></p>
+                    <p class="list-group-text mb-0 h-100 mr-auto text-success">{{item.task}}</p>
+                {% else %}
+                    <p class="list-group-text mb-0 h-100 mr-auto">{{item.task}}</p>
+                {% endif %}
+                <ul class="navbar-nav align-items-center d-flex flex-row ">
+                    <a class="mr-3 px-4 btn btn-primary" href="{{ url_for('edit', task_id=item.id)}}">Edit</a>
+                    <a class="mr-3 btn btn-primary" href="{{ url_for('check', task_id=item.id)}}">Check</a>
+                    <a class="btn btn-danger" href="{{ url_for('delete', task_id=item.id)}}">Delete</a>
+                </ul>
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    {% endblock %}
+</body>
+</html>
