@@ -33,7 +33,8 @@ def edit(task_id):
         db.session.commit()
         return redirect(url_for('main'))
     else:
-        return render_template('index.html', create=True, edit=True)
+        task = Item.query.get(task_id)
+        return render_template('index.html', create=True, edit=True, task=task.task)
 
 @app.route('/delete/<int:task_id>')
 def delete(task_id):
@@ -54,3 +55,5 @@ class Item(db.Model):
     task = db.Column(db.String(120), nullable=False)
     checked = db.Column(db.Boolean)
     
+if __name__ == "_main__":
+    app.run(debug=False, host='0.0.0.0')
