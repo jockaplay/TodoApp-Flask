@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "todoapp"
+version = "0.1.0"
+description = "ToDoApp to help to finish all projects"
+authors = ["jockaplay <jocksonmatheus@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = "^3.0.0"
+flask-bootstrap = "^3.3.7.1"
+flask-sqlalchemy = "^3.1.1"
+dynaconf = "^3.2.3"
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
